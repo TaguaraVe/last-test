@@ -1,19 +1,31 @@
-import prisma from '@/lib/prisma';
+import Link from "next/link";
 
-export default async function Home() {
-  const users = await prisma.user.findMany();
+import { FeatureCard } from "@/components/featureCard";
+import { features } from "@/data/feature";
+
+export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <h1 className="text-4xl font-bold mb-8 font-[family-name:var(--font-geist-sans)] text-[#333333]">
-        Taguara Digital
-      </h1>
-      <ol className="list-decimal list-inside font-[family-name:var(--font-geist-sans)]">
-        {users.map((user) => (
-          <li key={user.id} className="mb-2">
-            {user.name}
-          </li>
+    <section className="container mx-auto px-4 py-12">
+      <div className="mb-12 text-center">
+        <h2 className="mb-4 text-4xl font-bold">Gestión Integral de Ventas</h2>
+        <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-xl">
+          Sistema completo para administrar pedidos, clientes, productos y
+          localidades. Diseñado para optimizar tu proceso de ventas.
+        </p>
+      </div>
+
+      {/* Features */}
+      <div className="mt-16 grid cursor-pointer grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {features.map((feature) => (
+          <Link key={feature.href} href={feature.href}>
+            <FeatureCard
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+            />
+          </Link>
         ))}
-      </ol>
-    </div>
+      </div>
+    </section>
   );
 }
