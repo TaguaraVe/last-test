@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const VendorSchema = z.object({
+export const sellerSchema = z.object({
   name: z
     .string()
     .min(3, { message: "El nombre debe tener al menos 3 caracteres." }),
@@ -11,8 +11,11 @@ export const VendorSchema = z.object({
   role: z.string().nullable().optional(),
 });
 
-export const ChannelSchema = z.object({
+export const channelSchema = z.object({
   name: z
     .string()
     .min(3, { message: "El nombre debe tener al menos 3 caracteres." }),
 });
+
+export type SellerSchema = z.infer<typeof sellerSchema>;
+export type ChannelSchema = z.infer<typeof channelSchema>;

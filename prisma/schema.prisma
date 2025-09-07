@@ -30,7 +30,7 @@ model Post {
   author    User    @relation(fields: [authorId], references: [id])
 }
 
-model Vendor {
+model Seller {
   id        String   @id @default(cuid())
   name      String
   email     String   @unique

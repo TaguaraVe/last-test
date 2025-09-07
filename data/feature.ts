@@ -46,7 +46,7 @@ export const features: Feature[] = [
       "Administra países, estados y ciudades para mantener la integridad de los datos de ubicación.",
   },
   {
-    href: "/vendors",
+    href: "/sellers",
     icon: UsersRound,
     title: "Gestión de Vendedores",
     description:

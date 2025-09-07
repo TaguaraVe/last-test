@@ -4,59 +4,59 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 
-import { VendorSchema } from "@/schemas/vendorSchema";
+import { sellerSchema } from "@/schemas/Schema";
 
-const validateVendorData = (data: z.infer<typeof VendorSchema>) => {
-  const result = VendorSchema.safeParse(data);
+const validatedSellerData = (data: z.infer<typeof sellerSchema>) => {
+  const result = sellerSchema.safeParse(data);
   if (!result.success) {
     throw new Error("Datos de vendedor no válidos");
   }
   return result.data;
 };
 
-export async function getVendors() {
-  const vendors = await prisma.vendor.findMany({
+export async function getSellers() {
+  const vendors = await prisma.seller.findMany({
     orderBy: { createdAt: "desc" },
   });
   return vendors;
 }
 
-export async function createVendor(data: z.infer<typeof VendorSchema>) {
+export async function createSeller(data: z.infer<typeof sellerSchema>) {
   try {
-    const validatedData = validateVendorData(data);
-    await prisma.vendor.create({
+    const validatedData = validatedSellerData(data);
+    await prisma.seller.create({
       data: validatedData,
     });
-    revalidatePath("/vendors");
+    revalidatePath("/sellers");
     return { success: true };
   } catch (error) {
     return { success: false, error: (error as Error).message };
   }
 }
 
-export async function updateVendor(
+export async function updateSeller(
   id: string,
-  data: z.infer<typeof VendorSchema>,
+  data: z.infer<typeof sellerSchema>,
 ) {
   try {
-    const validatedData = validateVendorData(data);
-    await prisma.vendor.update({
+    const validatedData = validatedSellerData(data);
+    await prisma.seller.update({
       where: { id },
       data: validatedData,
     });
-    revalidatePath("/vendors");
+    revalidatePath("/sallers");
     return { success: true };
   } catch (error) {
     return { success: false, error: (error as Error).message };
   }
 }
 
-export async function deleteVendor(id: string) {
+export async function deleteSeller(id: string) {
   try {
-    await prisma.vendor.delete({
+    await prisma.seller.delete({
       where: { id },
     });
-    revalidatePath("/vendors");
+    revalidatePath("/sellers");
     return { success: true };
   } catch (error) {
     return { success: false, error: (error as Error).message };

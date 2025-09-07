@@ -1,8 +1,7 @@
-// src/app/vendors/components/VendorTable.tsx
 "use client";
 
 import { useState } from "react";
-import { Vendor } from "@/app/generated/prisma";
+import { Seller } from "@/app/generated/prisma";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -26,26 +25,26 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deleteVendor } from "@/app/actions/vendors";
-import { VendorForm } from "@/components/vendors/vendorsForms";
+import { deleteSeller } from "@/app/actions/seller";
+import { SellerForm } from "@/components/sellers/sellersForms";
 
-interface VendorTableProps {
-  vendors: Vendor[];
+interface SellerTableProps {
+  sellers: Seller[];
 }
 
-export const VendorTable = ({ vendors }: VendorTableProps) => {
+export const SellerTable = ({ sellers }: SellerTableProps) => {
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
+  const [selectedSeller, setSelectedSeller] = useState<Seller | null>(null);
 
-  const handleEditClick = (vendor: Vendor) => {
-    setSelectedVendor(vendor);
+  const handleEditClick = (seller: Seller) => {
+    setSelectedSeller(seller);
     setIsModalOpen(true);
   };
 
   const handleDelete = async (id: string) => {
     setLoading(true);
-    const result = await deleteVendor(id);
+    const result = await deleteSeller(id);
     setLoading(false);
     if (result.success) {
       toast("Vendedor eliminado correctamente.");
@@ -56,7 +55,7 @@ export const VendorTable = ({ vendors }: VendorTableProps) => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setSelectedVendor(null);
+    setSelectedSeller(null);
   };
 
   return (
@@ -74,23 +73,23 @@ export const VendorTable = ({ vendors }: VendorTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {vendors.map((vendor) => (
-            <TableRow key={vendor.id}>
-              <TableCell>{vendor.name}</TableCell>
-              <TableCell>{vendor.phone}</TableCell>
-              <TableCell>{vendor.email}</TableCell>
-              <TableCell>{vendor.role}</TableCell>
+          {sellers.map((seller) => (
+            <TableRow key={seller.id}>
+              <TableCell>{seller.name}</TableCell>
+              <TableCell>{seller.phone}</TableCell>
+              <TableCell>{seller.email}</TableCell>
+              <TableCell>{seller.role}</TableCell>
               <TableCell>
-                {format(new Date(vendor.createdAt), "dd/MM/yyyy")}
+                {format(new Date(seller.createdAt), "dd/MM/yyyy")}
               </TableCell>
               <TableCell>
-                {format(new Date(vendor.updatedAt), "dd/MM/yyyy")}
+                {format(new Date(seller.updatedAt), "dd/MM/yyyy")}
               </TableCell>
               <TableCell className="space-x-2 text-right">
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleEditClick(vendor)}
+                  onClick={() => handleEditClick(seller)}
                 >
                   <PencilIcon className="h-4 w-4" />
                 </Button>
@@ -111,7 +110,7 @@ export const VendorTable = ({ vendors }: VendorTableProps) => {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => handleDelete(vendor.id)}
+                        onClick={() => handleDelete(seller.id)}
                       >
                         Eliminar
                       </AlertDialogAction>
@@ -123,8 +122,8 @@ export const VendorTable = ({ vendors }: VendorTableProps) => {
           ))}
         </TableBody>
       </Table>
-      <VendorForm
-        initialData={selectedVendor}
+      <SellerForm
+        initialData={selectedSeller}
         isOpen={isModalOpen}
         onClose={handleModalClose}
       />

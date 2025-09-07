@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '../app/generated/prisma';
+import { PrismaClient, Prisma } from "../app/generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -44,42 +44,42 @@ const prisma = new PrismaClient();
 // main();
 
 async function main() {
-  console.log('Comenzando el proceso de seed...');
+  console.log("Comenzando el proceso de seed...");
 
   // Eliminar datos existentes para evitar duplicados en cada ejecución
   await prisma.post.deleteMany({});
   await prisma.user.deleteMany({});
-  await prisma.vendor.deleteMany({});
+  await prisma.seller.deleteMany({});
 
   // Crear un usuario de ejemplo
   const user1 = await prisma.user.create({
     data: {
-      email: 'juan.perez@example.com',
-      name: 'Juan Pérez',
+      email: "juan.perez@example.com",
+      name: "Juan Pérez",
     },
   });
 
   // Crear otro usuario para mostrar la relación
   const user2 = await prisma.user.create({
     data: {
-      email: 'ana.gomez@example.com',
-      name: 'Ana Gómez',
+      email: "ana.gomez@example.com",
+      name: "Ana Gómez",
     },
   });
 
   // Crear otro usuario para mostrar la relación
   const user3 = await prisma.user.create({
     data: {
-      email: 'pedro.lopez@example.com',
-      name: 'Pedro Lopez',
+      email: "pedro.lopez@example.com",
+      name: "Pedro Lopez",
     },
   });
 
   // Crear posts y asignarlos a los usuarios
   const post1 = await prisma.post.create({
     data: {
-      title: 'Mi primer post',
-      content: 'Este es el contenido de mi primer post.',
+      title: "Mi primer post",
+      content: "Este es el contenido de mi primer post.",
       published: true,
       authorId: user1.id,
     },
@@ -87,8 +87,8 @@ async function main() {
 
   const post2 = await prisma.post.create({
     data: {
-      title: 'Un post sobre Prisma',
-      content: 'Prisma es un ORM increíble.',
+      title: "Un post sobre Prisma",
+      content: "Prisma es un ORM increíble.",
       published: false,
       authorId: user1.id,
     },
@@ -96,8 +96,8 @@ async function main() {
 
   const post3 = await prisma.post.create({
     data: {
-      title: 'Receta de cocina',
-      content: 'Cómo preparar la mejor lasaña.',
+      title: "Receta de cocina",
+      content: "Cómo preparar la mejor lasaña.",
       published: true,
       authorId: user2.id,
     },
@@ -105,9 +105,9 @@ async function main() {
 
   const post4 = await prisma.post.create({
     data: {
-      title: 'Crear aplicacion con Prisma',
+      title: "Crear aplicacion con Prisma",
       content:
-        'Cómo pasar a producción una aplicación nexjs y prisma en vercel.',
+        "Cómo pasar a producción una aplicación nexjs y prisma en vercel.",
       published: true,
       authorId: user3.id,
     },
@@ -118,29 +118,29 @@ async function main() {
   console.log(`Creado post con ID: ${post3.id}`);
   console.log(`Creado post con ID: ${post4.id}`);
 
-  // Crear registros para el modelo Vendor
-  const vendor1 = await prisma.vendor.create({
+  // Crear registros para el modelo Seller
+  const seller1 = await prisma.seller.create({
     data: {
-      name: 'Tech Solutions Inc.',
-      phone: '555-123-4567',
-      role: 'Software Provider',
-      email: 'contacto@techsolutions.com',
+      name: "Tech Solutions Inc.",
+      phone: "555-123-4567",
+      role: "Software Provider",
+      email: "contacto@techsolutions.com",
     },
   });
 
-  const vendor2 = await prisma.vendor.create({
+  const seller2 = await prisma.seller.create({
     data: {
-      name: 'Creative Agency Ltd.',
-      phone: '555-987-6543',
-      role: 'Marketing',
-      email: 'hola@creativeagency.com',
+      name: "Creative Agency Ltd.",
+      phone: "555-987-6543",
+      role: "Marketing",
+      email: "hola@creativeagency.com",
     },
   });
 
-  console.log(`Creado Vendor con ID: ${vendor1.id}`);
-  console.log(`Creado Vendor con ID: ${vendor2.id}`);
+  console.log(`Creado seller con ID: ${seller1.id}`);
+  console.log(`Creado seller con ID: ${seller2.id}`);
 
-  console.log('Proceso de seed completado exitosamente.');
+  console.log("Proceso de seed completado exitosamente.");
 }
 
 // Llamar a la función `main` y manejar errores

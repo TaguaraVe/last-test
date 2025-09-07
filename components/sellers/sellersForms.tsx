@@ -1,11 +1,10 @@
-// src/app/vendors/components/VendorForm.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Vendor } from "@/app/generated/prisma";
+import { Seller } from "@/app/generated/prisma";
 import { toast } from "sonner";
 import {
   Form,
@@ -23,24 +22,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { VendorSchema } from "@/schemas/vendorSchema";
-import { createVendor, updateVendor } from "@/app/actions/vendors";
+import { sellerSchema } from "@/schemas/Schema";
+import { createSeller, updateSeller } from "@/app/actions/seller";
 
-interface VendorFormProps {
-  initialData?: Vendor | null;
+interface SellerFormProps {
+  initialData?: Seller | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const VendorForm = ({
+export const SellerForm = ({
   initialData,
   isOpen,
   onClose,
-}: VendorFormProps) => {
+}: SellerFormProps) => {
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof VendorSchema>>({
-    resolver: zodResolver(VendorSchema),
+  const form = useForm<z.infer<typeof sellerSchema>>({
+    resolver: zodResolver(sellerSchema),
     defaultValues: initialData || {
       name: "",
       phone: "",
@@ -67,13 +66,13 @@ export const VendorForm = ({
     }
   }, [initialData, form]);
 
-  const onSubmit = async (data: z.infer<typeof VendorSchema>) => {
+  const onSubmit = async (data: z.infer<typeof sellerSchema>) => {
     setLoading(true);
     let result;
     if (initialData) {
-      result = await updateVendor(initialData.id, data);
+      result = await updateSeller(initialData.id, data);
     } else {
-      result = await createVendor(data);
+      result = await createSeller(data);
     }
 
     setLoading(false);

@@ -1,18 +1,17 @@
-// src/app/vendors/components/VendorClient.tsx
 "use client";
 import { PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { VendorTable } from "@/components/vendors/vendorTable";
-import { VendorForm } from "@/components/vendors/vendorsForms";
-import { Vendor } from "@/app/generated/prisma";
+import { SellerTable } from "@/components/sellers/sellersTable";
+import { SellerForm } from "@/components/sellers/sellersForms";
+import { Seller } from "@/app/generated/prisma";
 
-interface VendorClientProps {
-  vendors: Vendor[];
+interface SellerClientProps {
+  sellers: Seller[];
 }
 
-export const VendorClient = ({ vendors }: VendorClientProps) => {
+export const SellerClient = ({ sellers }: SellerClientProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalClose = () => {
@@ -27,8 +26,8 @@ export const VendorClient = ({ vendors }: VendorClientProps) => {
           Crear Vendedor
         </Button>
       </div>
-      <VendorTable vendors={vendors} />
-      <VendorForm
+      <SellerTable sellers={sellers} />
+      <SellerForm
         initialData={null}
         isOpen={isModalOpen}
         onClose={handleModalClose}
