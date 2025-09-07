@@ -7,7 +7,9 @@ export default async function VendorsPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-6 text-2xl font-bold">Gestión de Vendedores</h1>
+      <h1 className="mb-6 text-center text-2xl font-bold">
+        Gestión de Vendedores
+      </h1>
       <VendorClient vendors={vendors} />
     </div>
   );
