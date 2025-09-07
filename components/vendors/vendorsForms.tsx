@@ -1,7 +1,7 @@
 // src/app/vendors/components/VendorForm.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -48,6 +48,24 @@ export const VendorForm = ({
       role: "",
     },
   });
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        name: initialData.name,
+        phone: initialData.phone,
+        email: initialData.email,
+        role: initialData.role,
+      });
+    } else {
+      form.reset({
+        name: "",
+        phone: "",
+        email: "",
+        role: "",
+      });
+    }
+  }, [initialData, form]);
 
   const onSubmit = async (data: z.infer<typeof VendorSchema>) => {
     setLoading(true);
@@ -126,7 +144,11 @@ export const VendorForm = ({
                 <FormItem>
                   <FormLabel>Rol</FormLabel>
                   <FormControl>
-                    <Input placeholder="Role del vendedor" {...field} />
+                    <Input
+                      placeholder="Role del vendedor"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

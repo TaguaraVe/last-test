@@ -33,9 +33,9 @@ model Post {
 model Vendor {
   id        String   @id @default(cuid())
   name      String
+  email     String   @unique
   phone     String
   role      String?
-  email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

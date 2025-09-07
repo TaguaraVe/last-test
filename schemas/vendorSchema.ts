@@ -8,5 +8,5 @@ export const VendorSchema = z.object({
     .string()
     .min(10, { message: "El teléfono debe tener al menos 10 dígitos." }),
   email: z.string().email({ message: "El correo electrónico no es válido." }),
-  role: z.string(),
+  role: z.string().nullable().optional(),
 });
